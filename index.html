@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Nexus AI Studio | Lyrics · Logo · Chatbot</title>
+  <!-- Google Fonts + Font Awesome Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
+      font-family: 'Inter', sans-serif;
+      color: #edf2ff;
+      line-height: 1.5;
+      padding: 2rem 1.5rem;
+      min-height: 100vh;
+    }
+
+    /* futuristic glassmorphic container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* header section */
+    .hero {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF, #a5b9ff, #6c8cff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+    .hero .glow {
+      text-shadow: 0 0 8px rgba(108, 140, 255, 0.3);
+    }
+    .hero p {
+      font-size: 1.2rem;
+      color: #b9c7ff;
+      max-width: 700px;
+      margin: 0.5rem auto 0;
+      font-weight: 400;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(108, 140, 255, 0.15);
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      border: 1px solid rgba(108, 140, 255, 0.4);
+      margin-bottom: 1rem;
+    }
+
+    /* 3‑card grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
+
+    /* card style */
+    .ai-card {
+      background: rgba(18, 25, 45, 0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 2rem;
+      border: 1px solid rgba(108, 140, 255, 0.25);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .ai-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(108, 140, 255, 0.6);
+      box-shadow: 0 30px 45px -12px rgba(0, 0, 0, 0.5);
+    }
+    .card-header {
+      padding: 1.5rem 1.5rem 0.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .card-header i {
+      font-size: 2rem;
+      color: #8aa3ff;
+      background: linear-gradient(145deg, #a6bcff, #6c8cff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .card-header h2 {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.3px;
+    }
+    .card-body {
+      padding: 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    /* inputs & buttons */
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .input-group label {
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #b9c7ff;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    input, select, textarea {
+      background: rgba(10, 15, 27, 0.7);
+      border: 1px solid rgba(108, 140, 255, 0.4);
+      border-radius: 1.2rem;
+      padding: 0.8rem 1rem;
+      font-family: 'Inter', monospace;
+      font-size: 0.9rem;
+      color: #f0f3ff;
+      transition: all 0.2s;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #8aa3ff;
+      box-shadow: 0 0 0 3px rgba(108, 140, 255, 0.2);
+    }
+    button {
+      background: linear-gradient(95deg, #2a3a70, #1c2a50);
+      border: none;
+      border-radius: 2rem;
+      padding: 0.75rem 1.2rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(4px);
+    }
+    button i {
+      font-size: 1rem;
+    }
+    button:hover {
+      background: linear-gradient(95deg, #3e51a0, #25376e);
+      transform: scale(0.98);
+      border-color: #8aa3ff;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+    }
+    .output-box {
+      background: #0b1020cc;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      border: 1px solid #2c3c6e;
+      font-size: 0.9rem;
+      max-height: 260px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+      font-family: monospace;
+      transition: all 0.2s;
+    }
+
+    /* canvas logo preview */
+    .logo-canvas-container {
+      display: flex;
+      justify-content: center;
+      margin: 0.5rem 0;
+    }
+    canvas {
+      background: radial-gradient(circle, #111a2b, #070c18);
+      border-radius: 1.5rem;
+      box-shadow: 0 12px 20px -8px black;
+      width: 100%;
+      max-width: 220px;
+      height: auto;
+      border: 1px solid #3e4c7a;
+      cursor: pointer;
+    }
+    .flex-btns {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    /* chatbot specific */
+    .chat-messages {
+      background: #0a0f1cd9;
+      border-radius: 1.2rem;
+      height: 240px;
+      overflow-y: auto;
+      padding: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid #2a3860;
+    }
+    .message {
+      display: flex;
+      flex-direction: column;
+      max-width: 85%;
+      animation: fadeSlideUp 0.2s ease;
+    }
+    .user-msg {
+      align-self: flex-end;
+    }
+    .bot-msg {
+      align-self: flex-start;
+    }
+    .bubble {
+      padding: 0.6rem 1rem;
+      border-radius: 1.5rem;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      word-break: break-word;
+    }
+    .user-msg .bubble {
+      background: linear-gradient(135deg, #2f4190, #1f2e66);
+      border-bottom-right-radius: 0.2rem;
+      color: white;
+    }
+    .bot-msg .bubble {
+      background: rgba(30, 40, 70, 0.9);
+      border-bottom-left-radius: 0.2rem;
+      border: 0.5px solid #4c6190;
+      color: #eef3ff;
+    }
+    .chat-input-area {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .chat-input-area input {
+      flex: 1;
+      border-radius: 2rem;
+    }
+    .small-icon {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    .typing-indicator {
+      font-size: 0.7rem;
+      color: #8ba0e0;
+      padding-left: 0.6rem;
+      font-style: italic;
+    }
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(6px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    footer {
+      text-align: center;
+      margin-top: 3.5rem;
+      font-size: 0.8rem;
+      color: #6f7eb3;
+    }
+    hr {
+      border-color: #253153;
+      margin: 1rem 0;
+    }
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #111a2b;
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #4c6190;
+      border-radius: 10px;
+    }
+    @media (max-width: 760px) {
+      body { padding: 1.2rem; }
+      .hero h1 { font-size: 2rem; }
+      .card-header h2 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="badge"><i class="fas fa-microchip"></i>  AI SUITE · FUTURE READY</div>
+    <h1 class="glow">Nexus AI Studio</h1>
+    <p>Lyrics that move · Logos that inspire · Chatbots that convert<br>⚡ portfolio‑ready, next‑gen intelligence</p>
+  </div>
+
+  <div class="tools-grid">
+    
+    <!-- 1. AI LYRICS GENERATOR 🔥 -->
+    <div class="ai-card">
+      <div class="card-header">
+        <i class="fas fa-music"></i>
+        <h2>Lyric Forge</h2>
+        <span style="margin-left:auto; font-size:0.8rem; background:#00000040; padding:4px 8px; border-radius:40px;">🔥 AI‑powered</span>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <label><i class="fas fa-feather-alt"></i> Topic / Mood</label>
+          <input type="text" id="lyricsTopic" placeholder="e.g., cosmic love, midnight rain, digital heart" value="starlit dreams">
+        </div>
+        <div class="input-group">
+          <label><i class="fas fa-waveform"></i> Genre vibe</label>
+          <select id="lyricsGenre">
+            <option value="pop">✨ Pop / Melodic</option>
+            <option value="rap">🎤 Hip‑Hop / Rap</option>
+            <option value="rock">🎸 Indie / Rock</option>
+            <option value="ballad">🌙 Emotional Ballad</option>
+          </select>
+        </div>
+        <button id="generateLyricsBtn"><i class="fas fa-wand-magic"></i> Generate Lyrics</button>
+        <div class="output-box" id="lyricsOutput">
+          <span style="opacity:0.7;">✨ Your AI lyrics will appear here — unique & original</span>
+        </div>
+        <div class="flex-btns">
+          <button id="copyLyricsBtn" style="background: #1e2a4e;"><i class="far fa-copy"></i> Copy</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. AI LOGO GENERATOR -->
+    <div class="ai-card">
+      <div class="card-header">
+        <i class="fas fa-palette"></i>
+        <h2>Logo Genesis</h2>
+        <span style="margin-left:auto; font-size:0.7rem;">⚡ generative</span>
+      </div>
+      <div class="card-body">
+        <div class="input-group">
+          <label><i class="fas fa-trademark"></i> Brand name</label>
+          <input type="text" id="brandName" placeholder="Your brand, startup or name" value="NexusAI">
+        </div>
+        <div class="input-group">
+          <label><i class="fas fa-shapes"></i> Style preference</label>
+          <select id="logoStyle">
+            <option value="futuristic">🌀 Futuristic / Cyber</option>
+            <option value="minimal">✨ Minimal / Clean</option>
+            <option value="playful">🎈 Playful / Vibrant</option>
+          </select>
+        </div>
+        <div class="logo-canvas-container">
+          <canvas id="logoCanvas" width="220" height="220" style="width:100%; max-width:220px; height:auto; aspect-ratio:1/1"></canvas>
+        </div>
+        <div class="flex-btns">
+          <button id="generateLogoBtn"><i class="fas fa-sync-alt"></i> Generate Logo</button>
+          <button id="downloadLogoBtn"><i class="fas fa-download"></i> PNG</button>
+        </div>
+        <p class="small-icon" style="font-size:0.7rem; text-align:center;">🎨 AI interprets brand & style → unique abstract logo</p>
+      </div>
+    </div>
+
+    <!-- 3. BUSINESS CHATBOT -->
+    <div class="ai-card">
+      <div class="card-header">
+        <i class="fas fa-robot"></i>
+        <h2>BizBot AI</h2>
+        <span style="margin-left:auto; font-size:0.7rem;">💼 24/7 assistant</span>
+      </div>
+      <div class="card-body">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message bot-msg">
+            <div class="bubble">👋 Hello! I'm BizBot, your AI business assistant. Ask me about pricing, services, hours, or anything about our AI solutions.</div>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Ask me anything business..." autocomplete="off">
+          <button id="sendChatBtn"><i class="fas fa-paper-plane"></i> Send</button>
+        </div>
+        <p class="small-icon" style="font-size:0.7rem; margin-top:0.2rem;"><i class="fas fa-lightbulb"></i> Try: "pricing", "support hours", "AI features"</p>
+      </div>
+    </div>
+  </div>
+  <footer>
+    <i class="fas fa-brain"></i> simulated AI intelligence · front‑end portfolio showcase · generative design
+  </footer>
+</div>
+
+<script>
+  // ======================== 1. AI LYRICS GENERATOR (mock but smart) ========================
+  const lyricsTopicInput = document.getElementById('lyricsTopic');
+  const lyricsGenreSelect = document.getElementById('lyricsGenre');
+  const generateLyricsBtn = document.getElementById('generateLyricsBtn');
+  const lyricsOutputDiv = document.getElementById('lyricsOutput');
+  const copyLyricsBtn = document.getElementById('copyLyricsBtn');
+
+  // rich lyrical templates & random fillers
+  const popLines = [
+    "Under the {topic} sky, we drift apart", 
+    "You're the echo in my {topic} heart", 
+    "Neon lights and {topic} dreams, nothing's what it seems",
+    "I found you where the {topic} flows, a secret only midnight knows",
+    "Every {topic} whisper, every starlight tear",
+    "Dancing through the {topic} rain, washing away the pain",
+    "Chorus: And we rise like {topic} flames, higher than the broken frames"
+  ];
+  const rapLines = [
+    "Yeah, {topic} on my mind, I'm chasing the vibe",
+    "Verse: They sleep on the vision, but I'm too alive",
+    "Stacking dreams like {topic} stacks, ain't no looking back",
+    "Flow cold, but my heart {topic} gold, story untold",
+    "Bridge: From the bottom to the peak, what they seek? I'm unique",
+    "Chorus: {topic} energy, can't you see? I'm the prophecy"
+  ];
+  const rockLines = [
+    "The {topic} electric, burning through the wire",
+    "Scream out loud in a {topic} fire, we're taking it higher",
+    "Guitar riffs and shattered glass, {topic} shadows from the past",
+    "Break the chains, feel the {topic} roar, we don't need nothing more",
+    "Chorus: {topic} rebel soul, taking control, ROCK AND ROLL"
+  ];
+  const balladLines = [
+    "Softly the {topic} falls, like a memory in the hall",
+    "I carry your {topic} name, through the silence and the flame",
+    "Every {topic} tear becomes a pearl, in this lonely world",
+    "And if the stars forget to shine, I'll hold your {topic} hand in mine",
+    "Chorus: {topic} lullaby, underneath the weeping sky"
+  ];
+  
+  function getRandomItem(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
+
+  function substituteTopic(line, topic) {
+    let formattedTopic = topic.toLowerCase();
+    return line.replace(/{topic}/g, formattedTopic).replace(/{Topic}/g, capitalize(formattedTopic));
+  }
+
+  function generateMockLyrics(topic, genre) {
+    if (!topic.trim()) topic = "dreamscape";
+    let baseSet = [];
+    if (genre === 'pop') baseSet = [...popLines];
+    else if (genre === 'rap') baseSet = [...rapLines];
+    else if (genre === 'rock') baseSet = [...rockLines];
+    else baseSet = [...balladLines];
+    
+    // add some random variety & mix
+    let extended = [...baseSet];
+    // add extra original lines
+    const extraTemplates = [
+      "And the {topic} echoes far and wide, nowhere left to hide",
+      "Chorus: {topic} waves carry me home, I'm never alone",
+      "Bridge: Maybe we're made of {topic} dust, but in you I trust",
+      "Outro: {topic} fades, but the melody remains"
+    ];
+    extended.push(...extraTemplates);
+    
+    // Shuffle array for fresh order
+    for (let i = extended.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [extended[i], extended[j]] = [extended[j], extended[i]];
+    }
+    
+    let selectedLines = extended.slice(0, 6 + Math.floor(Math.random() * 4)); // 6-9 lines
+    let finalLyrics = selectedLines.map(line => substituteTopic(line, topic)).join('\n');
+    // add title and mood
+    const moodEmoji = genre === 'pop' ? '✨' : genre === 'rap' ? '🎙️' : genre === 'rock' ? '🎸' : '🌙';
+    finalLyrics = `🎵 "${topic.toUpperCase()} ANTHEM" (${genre.toUpperCase()} vibe) ${moodEmoji}\n\n` + finalLyrics;
+    return finalLyrics;
+  }
+
+  function updateLyrics() {
+    let topic = lyricsTopicInput.value.trim();
+    if (topic === "") topic = "infinite dream";
+    const genre = lyricsGenreSelect.value;
+    lyricsOutputDiv.innerHTML = `<i class="fas fa-spinner fa-pulse"></i> AI composing lyrics...`;
+    setTimeout(() => {
+      const lyrics = generateMockLyrics(topic, genre);
+      lyricsOutputDiv.innerHTML = lyrics.replace(/\n/g, '<br>');
+    }, 420);
+  }
+
+  generateLyricsBtn.addEventListener('click', updateLyrics);
+  copyLyricsBtn.addEventListener('click', () => {
+    const rawText = lyricsOutputDiv.innerText;
+    if (rawText && !rawText.includes("AI composing")) {
+      navigator.clipboard.writeText(rawText);
+      copyLyricsBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+      setTimeout(() => copyLyricsBtn.innerHTML = '<i class="far fa-copy"></i> Copy', 1500);
+    } else {
+      alert("Generate lyrics first!");
+    }
+  });
+  
+  // initial lyrics
+  setTimeout(() => updateLyrics(), 100);
+
+  // ======================== 2. AI LOGO GENERATOR (canvas magic) ========================
+  const canvas = document.getElementById('logoCanvas');
+  const ctx = canvas.getContext('2d');
+  const brandNameInput = document.getElementById('brandName');
+  const logoStyleSelect = document.getElementById('logoStyle');
+  const generateLogoBtn = document.getElementById('generateLogoBtn');
+  const downloadLogoBtn = document.getElementById('downloadLogoBtn');
+
+  function getInitials(brand) {
+    let words = brand.trim().split(/\s+/);
+    if (words.length === 0) return "AI";
+    if (words.length === 1) return brand.slice(0,2).toUpperCase();
+    return (words[0][0] + words[words.length-1][0]).toUpperCase();
+  }
+
+  // generate vibrant & abstract logo based on brand & style
+  function drawLogo(brand, style) {
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    
+    // background gradient
+    let grad1, grad2;
+    if (style === 'futuristic') {
+      grad1 = '#1a2b4e'; grad2 = '#0a1030';
+      ctx.fillStyle = 'rgba(8, 18, 38, 0.9)';
+    } else if (style === 'minimal') {
+      grad1 = '#2a3550'; grad2 = '#101826';
+    } else {
+      grad1 = '#2f2b6b'; grad2 = '#481e5e';
+    }
+    const bgGrd = ctx.createLinearGradient(0, 0, w, h);
+    bgGrd.addColorStop(0, grad1);
+    bgGrd.addColorStop(1, grad2);
+    ctx.fillStyle = bgGrd;
+    ctx.fillRect(0, 0, w, h);
+    
+    // dynamic shapes based on brand hash + style
+    let seed = 0;
+    for (let i = 0; i < brand.length; i++) seed += brand.charCodeAt(i);
+    const r = () => (Math.sin(seed++) * 10000) % 1;
+    const colorChoice = () => `hsl(${Math.floor(r() * 360)}, 70%, 65%)`;
+    
+    // random geometric AI elements
+    const shapesCount = style === 'minimal' ? 4 : 7;
+    for (let i = 0; i < shapesCount; i++) {
+      ctx.save();
+      ctx.globalAlpha = 0.4 + r() * 0.3;
+      ctx.beginPath();
+      const type = Math.floor(r() * 3);
+      const x = r() * w;
+      const y = r() * h;
+      const size = 15 + r() * 45;
+      ctx.fillStyle = colorChoice();
+      if (type === 0) ctx.arc(x, y, size * 0.6, 0, Math.PI * 2);
+      else if (type === 1) ctx.fillRect(x - size/2, y - size/3, size, size * 0.8);
+      else {
+        ctx.moveTo(x, y - size/2);
+        for (let s = 0; s < 3; s++) {
+          let angle = (s * 120) * Math.PI/180;
+          let x2 = x + Math.cos(angle) * size;
+          let y2 = y + Math.sin(angle) * size;
+          ctx.lineTo(x2, y2);
+        }
+        ctx.closePath();
+      }
+      ctx.fill();
+      ctx.restore();
+    }
+    
+    // main emblem: dynamic ring + brand initials
+    const centerX = w/2, centerY = h/2;
+    const radius = w * 0.32;
+    ctx.shadowBlur = 0;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius + 5, 0, Math.PI * 2);
+    ctx.strokeStyle = `hsl(${Math.floor(seed % 360)}, 80%, 65%)`;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius - 3, 0, Math.PI * 2);
+    ctx.stroke();
+    
+    // inner gradient for text background
+    const grd = ctx.createRadialGradient(centerX-8, centerY-8, 5, centerX, centerY, radius);
+    grd.addColorStop(0, '#ffffff40');
+    grd.addColorStop(1, '#c0d0ff30');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius-4, 0, Math.PI*2);
+    ctx.fill();
+    
+    // initials text
+    let initials = getInitials(brand);
+    ctx.font = `bold ${Math.min(48, Math.floor(radius * 0.9))}px "Inter", system-ui`;
+    ctx.fillStyle = '#ffffffdd';
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = '#00000080';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(initials, centerX, centerY);
+    ctx.shadowBlur = 0;
+    // optional small tagline
+    ctx.font = `10px "Inter"`;
+    ctx.fillStyle = "#c7dcff";
+    ctx.fillText("⚡ AI gen", centerX, centerY + radius*0.6);
+  }
+
+  function handleGenerateLogo() {
+    let brand = brandNameInput.value.trim();
+    if (brand === "") brand = "NexusAI";
+    const style = logoStyleSelect.value;
+    // slight delay for 'AI generation' effect
+    generateLogoBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Generating...';
+    setTimeout(() => {
+      drawLogo(brand, style);
+      generateLogoBtn.innerHTML = '<i class="fas fa-sync-alt"></i> Generate Logo';
+    }, 280);
+  }
+
+  generateLogoBtn.addEventListener('click', handleGenerateLogo);
+  downloadLogoBtn.addEventListener('click', () => {
+    const link = document.createElement('a');
+    link.download = 'ai_logo.png';
+    link.href = canvas.toDataURL();
+    link.click();
+  });
+  
+  // init default logo
+  setTimeout(() => {
+    drawLogo("NexusAI", "futuristic");
+  }, 200);
+
+  // ======================== 3. BUSINESS CHATBOT ========================
+  const chatMessagesDiv = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const sendChatBtn = document.getElementById('sendChatBtn');
+
+  // knowledge base
+  function getBotReply(userMsg) {
+    const lowerMsg = userMsg.toLowerCase();
+    if (lowerMsg.includes('price') || lowerMsg.includes('cost') || lowerMsg.includes('pricing')) {
+      return "💸 Our AI solutions start at $49/mo for the Business plan. Custom enterprise pricing available — we also offer a free demo!";
+    } else if (lowerMsg.includes('hour') || lowerMsg.includes('open') || lowerMsg.includes('available')) {
+      return "⏰ Support hours: Mon-Fri 9 AM - 8 PM EST. Our AI chatbot is 24/7 for instant answers!";
+    } else if (lowerMsg.includes('service') || lowerMsg.includes('feature') || lowerMsg.includes('what can you do')) {
+      return "✨ I can generate AI lyrics, create logos, and answer business queries. Our full API suite includes NLP analytics & smart assistants.";
+    } else if (lowerMsg.includes('contact') || lowerMsg.includes('email') || lowerMsg.includes('phone')) {
+      return "📧 Reach our team at hello@nexusai.studio or call +1 (800) 555-AI 4BIZ. We respond within 2 hours.";
+    } else if (lowerMsg.includes('demo') || lowerMsg.includes('trial')) {
+      return "🎯 Book a free live demo: https://nexusai.studio/demo — see AI in action!";
+    } else if (lowerMsg.includes('hello') || lowerMsg.includes('hi') || lowerMsg.includes('hey')) {
+      return "👋 Hello! Ready to boost your business with AI? Ask me about features, pricing, or support.";
+    } else if (lowerMsg.includes('thank')) {
+      return "🙌 You're welcome! Let me know if you need further assistance.";
+    } else {
+      return "🤖 Thanks for your message! Our AI can handle custom requests. Would you like pricing info, feature list, or to schedule a demo? Type 'pricing', 'features', or 'demo'.";
+    }
+  }
+
+  function addMessage(sender, text, isUser = false) {
+    const msgDiv = document.createElement('div');
+    msgDiv.className = `message ${isUser ? 'user-msg' : 'bot-msg'}`;
+    const bubble = document.createElement('div');
+    bubble.className = 'bubble';
+    bubble.innerHTML = text.replace(/\n/g, '<br>');
+    msgDiv.appendChild(bubble);
+    chatMessagesDiv.appendChild(msgDiv);
+    chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+  }
+
+  function showTypingAndReply(userText) {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message bot-msg';
+    typingDiv.id = 'typingIndicator';
+    typingDiv.innerHTML = '<div class="bubble typing-indicator"><i class="fas fa-ellipsis-h"></i> AI is thinking...</div>';
+    chatMessagesDiv.appendChild(typingDiv);
+    chatMessagesDiv.scrollTop = chatMessagesDiv.scrollHeight;
+    setTimeout(() => {
+      document.getElementById('typingIndicator')?.remove();
+      const reply = getBotReply(userText);
+      addMessage('bot', reply, false);
+    }, 500 + Math.random() * 400);
+  }
+
+  function handleUserMessage() {
+    let msg = chatInput.value.trim();
+    if (msg === "") return;
+    addMessage('user', msg, true);
+    chatInput.value = '';
+    showTypingAndReply(msg);
+  }
+
+  sendChatBtn.addEventListener('click', handleUserMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') handleUserMessage();
+  });
+  
+  // optional: prefill sample conversation
+  setTimeout(() => {
+    // just to show it's alive
+  }, 10);
+</script>
+</body>
+</html>
